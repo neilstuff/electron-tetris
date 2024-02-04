@@ -9,17 +9,15 @@
 <div id="outer-board">
   <div id="board">
     <div id="banner">
-        div(id='message')
-        div(id='new-game') Tap here to start!
+        <div id='message'></div>
+        <div id='new-game'>Tap here to start!</div>
+    <div class="empty">
+      <div class="inner-tile">
+        <div class="inner-inner-tile">
+          
+        </div>
     </div>
-    - var n=0;
-    while n < 160
-      div(class="empty")
-        div(class="inner-tile")
-          div(class="inner-inner-tile")
-      - n++;
-    </div>
-  <div id="stats">
+<div id="stats">
     div(class='labels') Scores
       div(id='score' class='frame') 0        
     button(class='btn btn-rounded' id="left") 
