@@ -10,13 +10,15 @@
     },
     "build": {
         "win": {
-            "target": [{
-                "target": "nsis",
-                "arch": [
-                    "x64",
-                    "ia32"
-                ]
-            }]
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64",
+                        "ia32"
+                    ]
+                }
+            ]
         }
     },
     "repository": {
@@ -30,7 +32,8 @@
     "author": "GitHub",
     "license": "CC0-1.0",
     "dependencies": {
-        "mime": "^3.0.0"
+        "mime": "^3.0.0",
+        "@fortawesome/fontawesome-free": "^5.13.0"
     },
     "devDependencies": {
         "electron": "^19.0.4",

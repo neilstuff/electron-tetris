@@ -11,15 +11,26 @@ class Position {
       this.y = y;
   
       let block = document.createElement("div");
+
+      this.element = block;
+
       block.setAttribute("class", "block");
-      $(block).append(
+     
+      this.append(
         "<div class='inner-tile'><div class='inner-inner-tile'></div></div>"
       );
-      this.element = block;
+
     }
   
+     append(html) {
+      let fragment = document.createRange().createContextualFragment(html);
+
+      this.block.appendChild(fragment);
+
+     }
+
     init() {
-      $("#board").append(this.element);
+      $document.getElementById("board").appendChild(this.element);
     }
   
     render() {

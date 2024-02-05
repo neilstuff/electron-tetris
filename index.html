@@ -2,15 +2,18 @@
 
 <head>
 
-  <title>Mine-Sweeper</title>
-  <link rel="stylesheet" href="assets/styles/minesweeper.css">
+  <title>Tetris</title>
+  <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.css" />
+  <link rel="stylesheet" href="assets/styles/tetris.css">
 
   <script type="text/template" data-template="tile">
-      <div class="inner-tile">
-        <div class="inner-inner-tile">
-        </div>
+    <div class="inner-tile">
+      <div class="inner-inner-tile">
       </div>
-    </script>
+    </div>
+  </script>
+
+  <script src="assets/javascripts/tetris.js"></script>
 
 </head>
 <div id="outer-board">
@@ -18,24 +21,24 @@
     <div id="banner">
       <div id='message'></div>
       <div id='new-game'>Tap here to start!</div>
-        <div id="stats">
-          <div class="labels"> Scores
-
-            <div id="score" class='frame'> 0
-            </div>
-          </div>
-          <button class='btn btn-rounded' id="left">
-            <i class="fa fas fa-arrow-left"></i>
-          </button>
-          <button class='btn btn-rounded' id="right">
-            <i class="fa fas fa-arrow-right"></i>
-          </button>
-          <button class='btn btn-rounded' id="rotate">
-            <i class="fa fas fa-undo flipx"></i>
-          </button>
-          <button class='btn btn-rounded' id="down">
-            <i class="fa fas  fa-arrow-right"></i>
-          </button>
-          </div>
-        </div>
+    </div>
+  </div>
+  <div id="stats">
+    <div class="labels"> Scores
+      <div id="score" class='frame'> 0
       </div>
+    </div>
+    <button class='btn btn-rounded' id="left">
+      <i class="fa fas fa-arrow-left"></i>
+    </button>
+    <button class='btn btn-rounded' id="right">
+      <i class="fa fas fa-arrow-right"></i>
+    </button>
+    <button class='btn btn-rounded' id="rotate">
+      <i class="fa fas fa-undo flipx"></i>
+    </button>
+    <button class='btn btn-rounded' id="down">
+      <i class="fa fas  fa-arrow-down"></i>
+    </button>
+  </div>
+</div>

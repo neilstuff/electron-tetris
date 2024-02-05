@@ -20,13 +20,13 @@ var mainWindow = null;
 function createWindow() {
 
     mainWindow = new BrowserWindow({
-        width: (config.mode == "debug") ? 1000 : 700,
-        height: 830,
+        width: (config.mode == "debug") ? 800 : 400,
+        height: 530,
         resizable: false,
         frame: true,
         maximizable: true,
-        minHeight: 830,
-        minWidth: (config.mode == "debug") ? 1000 : 700,
+        minHeight: 530,
+        minWidth: (config.mode == "debug") ? 1000 : 400,
         fullscreenable: true,
         autoHideMenuBar: true,
 
@@ -44,7 +44,7 @@ function createWindow() {
     }
 
     mainWindow.setMenu(null);
-    mainWindow.setTitle('Mine-Sweeper');
+    mainWindow.setTitle('Tetris');
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file',
