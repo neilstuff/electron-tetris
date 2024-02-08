@@ -107,7 +107,8 @@ body {
   
   .block,
   .empty {
-    position: absolute;
+    position: relative;
+    float: left;
     background-color: #c4d6a7;
     width: 28px;
     height: 28px;
