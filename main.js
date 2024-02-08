@@ -21,11 +21,11 @@ function createWindow() {
 
     mainWindow = new BrowserWindow({
         width: (config.mode == "debug") ? 800 : 400,
-        height: 530,
+        height: 520,
         resizable: false,
         frame: true,
         maximizable: true,
-        minHeight: 530,
+        minHeight: 520,
         minWidth: (config.mode == "debug") ? 1000 : 400,
         fullscreenable: true,
         autoHideMenuBar: true,
