@@ -24,10 +24,14 @@ class Block {
         document.getElementById("board").appendChild(this.element);
     }
 
+    hide() {
+
+        document.getElementById(`tile-${this.x}-${this.y}`).style.display = "none"
+
+    }
+
     render() {
 
-        console.log(this.x, this.y);
-        
         document.getElementById(`tile-${this.x}-${this.y}`).style.display = "inline-block"
 
     }
@@ -77,6 +81,12 @@ class Shape {
         return Array.from(this.blocks);
     }
 
+    hide() {
+        for (let block of this.blocks) {
+            block.hide();
+        }
+    }
+
     render() {
         for (let block of this.blocks) {
             block.render();
@@ -90,6 +100,10 @@ class Shape {
     }
 
     fall() {
+        for (let block of this.blocks) {
+            block.hide();
+        }
+
         for (let block of this.blocks) {
             block.fall();
         }
@@ -690,6 +704,7 @@ class Board {
                 this.arePositonsWithinBoard(shape.leftPositions()) &&
                 this.areBlocksEmpty(shape.leftPositions())
             ) {
+                shape.hide();
                 shape.moveLeft();
                 shape.render();
             }
@@ -703,6 +718,7 @@ class Board {
                 this.areBlocksEmpty(shape.rotatePositions())
             )
 
+            shape.hide();
             shape.rotate();
             shape.render();
 
@@ -715,6 +731,7 @@ class Board {
                 this.arePositonsWithinBoard(shape.rightPositions()) &&
                 this.areBlocksEmpty(shape.rightPositions())
             ) {
+                shape.hide();
                 shape.moveRight();
                 shape.render();
             }
