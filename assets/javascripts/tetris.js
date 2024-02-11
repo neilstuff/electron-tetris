@@ -10,16 +10,6 @@ class Block {
         this.x = x;
         this.y = y;
 
-        let block = document.createElement("div");
-
-        this.element = block;
-
-        block.setAttribute("class", "block");
-
-        this.append(
-            "<div class='inner-tile'><div class='inner-inner-tile'></div></div>"
-        );
-
     }
 
     append(html) {
@@ -35,14 +25,11 @@ class Block {
     }
 
     render() {
+
+        console.log(this.x, this.y);
         
-        var rect = this.element.getBoundingClientRect();
+        document.getElementById(`tile-${this.x}-${this.y}`).style.display = "inline-block"
 
-        console.log(this.x, this.y, rect);
-
-        this.element.style.cssText = `left: ${this.y * rect.width}px; top: ${this.x * rect.height}px`;
-
-        console.log(this.element.style.cssText);
     }
 
     fall() {
@@ -76,8 +63,9 @@ class Block {
     }
 
     destroy() {
-        $(this.element).remove();
+        this.element.parent.removeChild(element);
     }
+
 }
 
 class Shape {
@@ -87,12 +75,6 @@ class Shape {
 
     getBlocks() {
         return Array.from(this.blocks);
-    }
-
-    init() {
-        for (let block of this.blocks) {
-            block.init();
-        }
     }
 
     render() {
@@ -424,28 +406,47 @@ class Board {
     }
 
     init() {
+
+        /**
+         * Parameter Substitution for templates
+         * 
+         * @param {String} template the template 
+         * @param {*} values the values as a dictionary
+         * @returns a string with substituted values that conform to the template
+         */
+        function substitute(template, values) {
+            let value = template;
+
+            let keys = Object.keys(values);
+
+            for (let key in keys) {
+                value = value.split("${" + keys[key] + "}").join(values[keys[key]]);
+            }
+
+            return value;
+
+        }
+
         let template = document.querySelector('script[data-template="tile"]').text;
         let board = document.getElementById("board");
 
         let element = board;
 
-        for (var iTile = 0; iTile < 160; iTile++) {
-            let fragment = document.createRange().createContextualFragment(template);
+        for (var row = 0; row < 16; row++) {
 
-            board.append(fragment);
+            for (var col = 0; col < 10; col++) {
+
+                var tile = substitute(template, {
+                    id: `${row}-${col}`
+                });
+
+                let fragment = document.createRange().createContextualFragment(tile);
+
+                board.append(fragment);
+
+            }
 
         }
-
-        var elements = document.getElementsByClassName("empty");
-
-        Array.prototype.forEach.call(elements, function (element, index) {
-            let x = parseInt(index / 10);
-            let y = index % 10;
-            element.style.cssText = `
-                left: y * ${element}.innerWidth() + "px",
-                top: x * $${element}.innerHeight() + "px"`
-
-        });
 
         document.getElementById("message").text = "Tetris";
 
@@ -467,7 +468,7 @@ class Board {
         this.gameOver = false;
         this.initGameLoop(this.loopInterval);
         this.setScore(0);
-        document.getElementById("banner").style.display ="none";
+        document.getElementById("banner").style.display = "none";
     }
 
     initGameLoop(value) {
@@ -481,13 +482,27 @@ class Board {
     }
 
     gameLoop() {
+
+        this.reset();
+
         this.renderShapes();
         this.renderBlocks();
         this.spawnShapes();
         this.gameUpdate();
 
-        console.log("Shapes Length:" + this.shapes.length);
-        console.log("Blocks Length:" + this.blocks.length);
+    }
+
+    reset() {
+
+        for (var col = 0; col < 10; col++) {
+            for (var row = 0; row < 16; row++) {
+
+                document.getElementById(`tile-${row}-${col}`).style.display = "none";
+                
+            }
+
+        }
+
     }
 
     gameUpdate() {
@@ -498,7 +513,7 @@ class Board {
                 this.interval = undefined;
             }
 
-            document.getElementById("banner").style.display ="inline-block";
+            document.getElementById("banner").style.display = "inline-block";
             document.getElementById("message").text = "Game Over!";
             document.getElementById("new-game").text = "Tap here to start again!";
 
@@ -568,7 +583,7 @@ class Board {
 
     flashBlocks(blocks, callback) {
         let anim = null;
-        
+
         for (let block of blocks) {
             anim = block.flash();
         }
@@ -642,7 +657,6 @@ class Board {
                     break;
             }
 
-            shape.init();
             shape.render();
             this.shapes.push(shape);
         }
@@ -663,11 +677,13 @@ class Board {
     }
 
     arePositonsWithinBoard(positions) {
+
         for (let position of positions) {
             if (position.x >= 16 || position.y < 0 || position.y >= 10) {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -701,9 +717,10 @@ class Board {
                 this.arePositonsWithinBoard(shape.rotatePositions()) &&
                 this.areBlocksEmpty(shape.rotatePositions())
             )
-                shape.rotate();
-            shape.init();
+
+            shape.rotate();
             shape.render();
+
         }
     }
 
@@ -733,7 +750,6 @@ class Board {
 }
 
 let board = new Board();
-
 
 document.addEventListener("keydown", function (e) {
     switch (e.which) {
