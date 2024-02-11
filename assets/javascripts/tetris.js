@@ -35,9 +35,12 @@ class Block {
     }
 
     render() {
-        this.element.style.cssText = `
-        left: ${this.y * this.element.width} + "px";
-        top: ${this.x * this.element.height} + "px"`
+        
+        var rect = this.element.getBoundingClientRect();
+
+        console.log(this.x, this.y, rect);
+
+        this.element.style.cssText = `left: ${this.y * rect.width}px; top: ${this.x * rect.height}px`;
 
         console.log(this.element.style.cssText);
     }
@@ -482,6 +485,7 @@ class Board {
         this.renderBlocks();
         this.spawnShapes();
         this.gameUpdate();
+
         console.log("Shapes Length:" + this.shapes.length);
         console.log("Blocks Length:" + this.blocks.length);
     }
@@ -493,10 +497,13 @@ class Board {
                 clearInterval(this.interval);
                 this.interval = undefined;
             }
-            $("#banner").show();
-            $("#message").text("Game Over!");
-            $("#new-game").text("Tap here to start again!");
+
+            document.getElementById("banner").style.display ="inline-block";
+            document.getElementById("message").text = "Game Over!";
+            document.getElementById("new-game").text = "Tap here to start again!";
+
         }
+
     }
 
     isGameOver() {
@@ -510,6 +517,7 @@ class Board {
     }
 
     renderShapes() {
+
         for (let shape of this.getShapes()) {
             if (
                 this.arePositonsWithinBoard(shape.fallingPositions()) &&
@@ -536,6 +544,7 @@ class Board {
     }
 
     renderBlocks() {
+
         for (let x = 0; x < 16; x++) {
             let blocks = [];
             for (let y = 0; y < 10; y++) {
@@ -559,10 +568,13 @@ class Board {
 
     flashBlocks(blocks, callback) {
         let anim = null;
+        
         for (let block of blocks) {
             anim = block.flash();
         }
+
         anim[0].onfinish = callback;
+
     }
 
     fallBlocks(i) {
