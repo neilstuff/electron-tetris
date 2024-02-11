@@ -33,6 +33,7 @@
     "license": "CC0-1.0",
     "dependencies": {
         "mime": "^3.0.0",
+        "animatelo": "^1.0.3",
         "@fortawesome/fontawesome-free": "^5.13.0"
     },
     "devDependencies": {

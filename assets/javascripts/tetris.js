@@ -25,20 +25,21 @@ class Block {
     append(html) {
         let fragment = document.createRange().createContextualFragment(html);
 
-        this.block.appendChild(fragment);
+        this.element.appendChild(fragment);
 
     }
 
     init() {
-    
+
         document.getElementById("board").appendChild(this.element);
     }
 
     render() {
-        $(this.element).css({
-            left: this.y * $(this.element).innerWidth() + "px",
-            top: this.x * $(this.element).innerHeight() + "px"
-        });
+        this.element.style.cssText = `
+        left: ${this.y * this.element.width} + "px";
+        top: ${this.x * this.element.height} + "px"`
+
+        console.log(this.element.style.cssText);
     }
 
     fall() {
@@ -412,7 +413,7 @@ class Board {
 
     setScore(value) {
         this.score = value;
-        $("#score").text(this.score);
+        document.getElementById("score").text = this.score;
     }
 
     getScore() {
@@ -424,7 +425,7 @@ class Board {
         let board = document.getElementById("board");
 
         let element = board;
-    
+
         for (var iTile = 0; iTile < 160; iTile++) {
             let fragment = document.createRange().createContextualFragment(template);
 
@@ -432,23 +433,18 @@ class Board {
 
         }
 
+        var elements = document.getElementsByClassName("empty");
 
-        console.log(board.innerHTML);
-
-        var elements =  document.getElementsByClassName("empty"); 
-
-        elements.forEach(async (element, index) => {
-
+        Array.prototype.forEach.call(elements, function (element, index) {
             let x = parseInt(index / 10);
             let y = index % 10;
+            element.style.cssText = `
+                left: y * ${element}.innerWidth() + "px",
+                top: x * $${element}.innerHeight() + "px"`
 
-            $(element).css({
-                left: y * $(element).innerWidth() + "px",
-                top: x * $(element).innerHeight() + "px"
-            });
         });
 
-        $("#message").text("Tetris");
+        document.getElementById("message").text = "Tetris";
 
         window.animatelo.flash("#new-game", {
             duration: 2500,
@@ -468,7 +464,7 @@ class Board {
         this.gameOver = false;
         this.initGameLoop(this.loopInterval);
         this.setScore(0);
-        $("#banner").hide();
+        document.getElementById("banner").style.display ="none";
     }
 
     initGameLoop(value) {
@@ -727,7 +723,7 @@ class Board {
 let board = new Board();
 
 
-document.keydown(function (e) {
+document.addEventListener("keydown", function (e) {
     switch (e.which) {
         case 37: // left
             board.leftKeyPress();
@@ -760,27 +756,23 @@ document.keydown(function (e) {
 
 window.onload = function () {
 
-    let template = document.querySelector('script[data-template="tile"]').text;
-
-    alert(template);
-
-    document.getElementById("new-game").click(function () {
+    document.getElementById("new-game").addEventListener("click", function () {
         board.newGame();
     });
 
-    document.getElementById("down").click(function () {
+    document.getElementById("down").addEventListener("click", function () {
         board.downKeyPress();
     });
 
-    document.getElementById("rotate").click(function () {
+    document.getElementById("rotate").addEventListener("click", function () {
         board.upKeyPress();
     });
 
-    document.getElementById("left").click(function () {
+    document.getElementById("left").addEventListener("click", function () {
         board.leftKeyPress();
     });
 
-    document.getElementById("right").click(function () {
+    document.getElementById("right").addEventListener("click", function () {
         board.rightKeyPress();
     });
 
