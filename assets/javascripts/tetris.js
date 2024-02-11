@@ -483,25 +483,10 @@ class Board {
 
     gameLoop() {
 
-        this.reset();
-
         this.renderShapes();
         this.renderBlocks();
         this.spawnShapes();
         this.gameUpdate();
-
-    }
-
-    reset() {
-
-        for (var col = 0; col < 10; col++) {
-            for (var row = 0; row < 16; row++) {
-
-                document.getElementById(`tile-${row}-${col}`).style.display = "none";
-                
-            }
-
-        }
 
     }
 

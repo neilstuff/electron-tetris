@@ -7,13 +7,12 @@
     <link rel="stylesheet" href="assets/styles/tetris.css">
 
     <script src="node_modules/animatelo/dist/animatelo.min.js"></script>
-    
- 
+
 
     <script type="text/template" data-template="tile">
-        <div class="empty">
+        <div class="block">
             <div class="inner-tile">
-                <div class="inner-inner-tile"></div>
+                <div id="tile-${id}" class="inner-inner-tile"></div>
             </div>
         </div>
   </script>
