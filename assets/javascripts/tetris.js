@@ -26,13 +26,17 @@ class Block {
 
     hide() {
 
-        document.getElementById(`tile-${this.x}-${this.y}`).style.display = "none"
+        if (this.x >= 0 && this.y >= 0) {
+            document.getElementById(`tile-${this.x}-${this.y}`).style.display = "none";
+        }
 
     }
 
     render() {
 
-        document.getElementById(`tile-${this.x}-${this.y}`).style.display = "inline-block"
+        if (this.x >= 0 && this.y >= 0) {
+            document.getElementById(`tile-${this.x}-${this.y}`).style.display = "inline-block";
+        }
 
     }
 
@@ -61,13 +65,9 @@ class Block {
     }
 
     flash() {
-        return window.animatelo.flash(this.element, {
+        return window.animatelo.flash(document.getElementById(`tile-${this.x}-${this.y}`), {
             duration: 500
         });
-    }
-
-    destroy() {
-        this.element.parent.removeChild(element);
     }
 
 }
@@ -131,7 +131,7 @@ class Shape {
 
     clear() {
         for (let block of this.blocks) {
-            block.destroy();
+            block.hide();
         }
         this.blocks = [];
     }
@@ -611,7 +611,7 @@ class Board {
 
     destroyBlocks(blocks) {
         for (let block of blocks) {
-            block.destroy();
+            block.hide();
         }
     }
 
@@ -718,7 +718,7 @@ class Board {
                 this.areBlocksEmpty(shape.rotatePositions())
             )
 
-            shape.hide();
+                shape.hide();
             shape.rotate();
             shape.render();
 
