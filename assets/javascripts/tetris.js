@@ -107,6 +107,7 @@ class Shape {
         for (let block of this.blocks) {
             block.fall();
         }
+
     }
 
     rightPositions() {
@@ -559,21 +560,25 @@ class Board {
 
     renderBlocks() {
 
-        for (let x = 0; x < 16; x++) {
+        for (let row = 0; row < 16; row++) {
             let blocks = [];
-            for (let y = 0; y < 10; y++) {
-                let block = this.getBlock(x, y);
+            
+            for (let col = 0; col < 10; col++) {
+                let block = this.getBlock(row, col);
                 if (!block) {
                     break;
                 }
                 blocks.push(block);
             }
+
             if (blocks.length == 10) {
                 let ref = this;
+                
                 this.removeBlocks(blocks);
+
                 this.flashBlocks(blocks, function () {
                     ref.destroyBlocks(blocks);
-                    ref.fallBlocks(x);
+                    ref.fallBlocks(row);
                     ref.setScore(ref.getScore() + 10);
                 });
             }
@@ -591,11 +596,16 @@ class Board {
 
     }
 
-    fallBlocks(i) {
-        for (let x = 0; x < i; x++) {
-            for (let y = 0; y < 10; y++) {
-                let block = this.getBlock(x, y);
+    fallBlocks(pos) {
+        console.log("fallBlocks [1]: " + pos);
+  
+        for (let row = 0; row < pos; row++) {
+            for (let col = 0; col < 10; col++) {
+                console.log("fallBlocks [2]: " + row + " " + col);
+                let block = this.getBlock(row, col);
                 if (block) {
+                    console.log("fallBlocks [3]: " + row + " " + col);
+                    block.hide();
                     block.fall();
                     block.render();
                 }
@@ -604,9 +614,13 @@ class Board {
     }
 
     removeBlocks(blocks) {
+ 
         for (let block of blocks) {
+
             this.blocks.splice(this.blocks.indexOf(block), 1);
+    
         }
+
     }
 
     destroyBlocks(blocks) {
