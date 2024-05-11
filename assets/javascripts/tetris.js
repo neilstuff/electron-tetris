@@ -486,7 +486,7 @@ class Board {
         this.setScore(0);
         document.getElementById("banner").style.display = "none";
         window.audio.play();
-    
+
     }
 
     initGameLoop(value) {
@@ -522,7 +522,7 @@ class Board {
 
             window.audio.pause();
             window.gameOver.play();
-  
+
         }
 
     }
@@ -564,11 +564,29 @@ class Board {
         }
     }
 
-    renderBlocks() {
+    async renderBlocks() {
+
+        function flashRow(ref, row, blocks) {
+            
+            return new Promise((accept, reject) => {
+                ref.flashBlocks(blocks, function () {
+                    window.rowRemoved.play();
+
+                    ref.removeBlocks(blocks);
+                    ref.destroyBlocks(blocks);
+                    ref.fallBlocks(row);
+                    ref.setScore(ref.getScore() + 10);
+
+                    accept();
+                });
+
+            })
+
+        }
 
         for (let row = 0; row < 16; row++) {
             let blocks = [];
-            
+
             for (let column = 0; column < 10; column++) {
                 let block = this.getBlock(row, column);
                 if (!block) {
@@ -579,19 +597,15 @@ class Board {
 
             if (blocks.length == 10) {
                 let ref = this;
-                
-                this.removeBlocks(blocks);
 
-                this.flashBlocks(blocks, function () {
-                    ref.destroyBlocks(blocks);
-                    ref.fallBlocks(row);
-                    ref.setScore(ref.getScore() + 10);
-                });
+                await flashRow(ref, row, blocks);
+
             }
         }
     }
 
     flashBlocks(blocks, callback) {
+
         let anim = null;
 
         for (let block of blocks) {
@@ -602,14 +616,17 @@ class Board {
 
     }
 
-    fallBlocks(pos) {  
-  
+    fallBlocks(pos) {
+
         for (let row = 0; row < pos; row++) {
             for (let column = 0; column < 10; column++) {
+
                 let block = this.getBlock(row, column);
-                
+
                 if (block) {
                     block.hide();
+                } else {
+                    document.getElementById(`tile-${row}-${column}`).style.display = "none";
                 }
 
             }
@@ -619,7 +636,7 @@ class Board {
         for (let row = 0; row < pos; row++) {
             for (let column = 0; column < 10; column++) {
                 let block = this.getBlock(row, column);
-                
+
                 if (block) {
                     block.fall();
                     block.render();
@@ -632,11 +649,11 @@ class Board {
     }
 
     removeBlocks(blocks) {
- 
+
         for (let block of blocks) {
 
             this.blocks.splice(this.blocks.indexOf(block), 1);
-    
+
         }
 
     }
@@ -841,8 +858,12 @@ window.onload = function () {
 
     window.audio = new Audio(document.getElementById("music").src);
     window.audio.volume = 0.1;
+    window.audio.loop = true;
 
     window.gameOver = new Audio(document.getElementById("game-over").src);
     window.gameOver.volume = 0.1;
+
+    window.rowRemoved = new Audio(document.getElementById("row-removed").src);
+    window.rowRemoved.volume = 0.3;
 
 }
