@@ -521,7 +521,8 @@ class Board {
             document.getElementById("new-game").text = "Tap here to start again!";
 
             window.audio.pause();
-
+            window.gameOver.play();
+  
         }
 
     }
@@ -840,5 +841,8 @@ window.onload = function () {
 
     window.audio = new Audio(document.getElementById("music").src);
     window.audio.volume = 0.1;
+
+    window.gameOver = new Audio(document.getElementById("game-over").src);
+    window.gameOver.volume = 0.1;
 
 }
