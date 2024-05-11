@@ -485,6 +485,8 @@ class Board {
         this.initGameLoop(this.loopInterval);
         this.setScore(0);
         document.getElementById("banner").style.display = "none";
+        window.audio.play();
+    
     }
 
     initGameLoop(value) {
@@ -517,6 +519,8 @@ class Board {
             document.getElementById("banner").style.display = "inline-block";
             document.getElementById("message").text = "Game Over!";
             document.getElementById("new-game").text = "Tap here to start again!";
+
+            window.audio.pause();
 
         }
 
@@ -833,5 +837,8 @@ window.onload = function () {
     document.getElementById("right").addEventListener("click", function () {
         board.rightKeyPress();
     });
+
+    window.audio = new Audio(document.getElementById("music").src);
+    window.audio.volume = 0.1;
 
 }
