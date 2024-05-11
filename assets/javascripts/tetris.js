@@ -6,9 +6,9 @@ class Position {
 }
 
 class Block {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+    constructor(row, column) {
+        this.row = row;
+        this.column = column;
 
     }
 
@@ -26,46 +26,46 @@ class Block {
 
     hide() {
 
-        if (this.x >= 0 && this.y >= 0) {
-            document.getElementById(`tile-${this.x}-${this.y}`).style.display = "none";
+        if (this.row >= 0 && this.column >= 0) {
+            document.getElementById(`tile-${this.row}-${this.column}`).style.display = "none";
         }
 
     }
 
     render() {
 
-        if (this.x >= 0 && this.y >= 0) {
-            document.getElementById(`tile-${this.x}-${this.y}`).style.display = "inline-block";
+        if (this.row >= 0 && this.column >= 0) {
+            document.getElementById(`tile-${this.row}-${this.column}`).style.display = "inline-block";
         }
 
     }
 
     fall() {
-        this.x += 1;
+        this.row += 1;
     }
 
     moveRight() {
-        this.y += 1;
+        this.column += 1;
     }
 
     moveLeft() {
-        this.y -= 1;
+        this.column -= 1;
     }
 
     rightPosition() {
-        return new Position(this.x, this.y + 1);
+        return new Position(this.row, this.column + 1);
     }
 
     leftPosition() {
-        return new Position(this.x, this.y - 1);
+        return new Position(this.row, this.column - 1);
     }
 
     getPosition() {
-        return new Position(this.x, this.y);
+        return new Position(this.row, this.column);
     }
 
     flash() {
-        return window.animatelo.flash(document.getElementById(`tile-${this.x}-${this.y}`), {
+        return window.animatelo.flash(document.getElementById(`tile-${this.row}-${this.column}`), {
             duration: 500
         });
     }
@@ -150,6 +150,7 @@ class Shape {
     rotatePositions() {
         //do nothing
     }
+
 }
 
 class Square extends Shape {
@@ -449,10 +450,10 @@ class Board {
 
         for (var row = 0; row < 16; row++) {
 
-            for (var col = 0; col < 10; col++) {
+            for (var column = 0; column < 10; column++) {
 
                 var tile = substitute(template, {
-                    id: `${row}-${col}`
+                    id: `${row}-${column}`
                 });
 
                 let fragment = document.createRange().createContextualFragment(tile);
@@ -563,8 +564,8 @@ class Board {
         for (let row = 0; row < 16; row++) {
             let blocks = [];
             
-            for (let col = 0; col < 10; col++) {
-                let block = this.getBlock(row, col);
+            for (let column = 0; column < 10; column++) {
+                let block = this.getBlock(row, column);
                 if (!block) {
                     break;
                 }
@@ -596,21 +597,34 @@ class Board {
 
     }
 
-    fallBlocks(pos) {
+    fallBlocks(pos) {  
         console.log("fallBlocks [1]: " + pos);
-  
+ 
         for (let row = 0; row < pos; row++) {
-            for (let col = 0; col < 10; col++) {
-                console.log("fallBlocks [2]: " + row + " " + col);
-                let block = this.getBlock(row, col);
+            for (let column = 0; column < 10; column++) {
+                let block = this.getBlock(row, column);
+                
                 if (block) {
-                    console.log("fallBlocks [3]: " + row + " " + col);
                     block.hide();
+                }
+
+            }
+
+        }
+
+        for (let row = 0; row < pos; row++) {
+            for (let column = 0; column < 10; column++) {
+                let block = this.getBlock(row, column);
+                
+                if (block) {
                     block.fall();
                     block.render();
                 }
+
             }
+
         }
+
     }
 
     removeBlocks(blocks) {
@@ -629,13 +643,13 @@ class Board {
         }
     }
 
-    getBlock(x, y) {
+    getBlock(row, column) {
         for (let block of this.blocks) {
-            if (block.x == x && block.y == y) {
+            if (block.row == row && block.column == column) {
                 return block;
             }
         }
-        return undefined;
+        return null;
     }
 
     spawnShapes() {
@@ -732,7 +746,7 @@ class Board {
                 this.areBlocksEmpty(shape.rotatePositions())
             )
 
-                shape.hide();
+            shape.hide();
             shape.rotate();
             shape.render();
 
