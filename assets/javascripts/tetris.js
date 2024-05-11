@@ -414,7 +414,7 @@ class Board {
 
     setScore(value) {
         this.score = value;
-        document.getElementById("score").text = this.score;
+        document.getElementById("score").innerHTML = this.score;
     }
 
     getScore() {
@@ -598,8 +598,7 @@ class Board {
     }
 
     fallBlocks(pos) {  
-        console.log("fallBlocks [1]: " + pos);
- 
+  
         for (let row = 0; row < pos; row++) {
             for (let column = 0; column < 10; column++) {
                 let block = this.getBlock(row, column);
@@ -626,7 +625,6 @@ class Board {
         }
 
     }
-
 
     removeBlocks(blocks) {
  
