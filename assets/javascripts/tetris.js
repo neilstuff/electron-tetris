@@ -478,7 +478,7 @@ class Board {
             this.addBlocks(shape.getBlocks());
         }
         for (let block of this.blocks) {
-            block.destroy();
+            block.hide();
         }
         this.blocks = [];
         this.gameOver = false;
@@ -745,12 +745,13 @@ class Board {
             if (
                 this.arePositonsWithinBoard(shape.rotatePositions()) &&
                 this.areBlocksEmpty(shape.rotatePositions())
-            )
+            ) {
 
-            shape.hide();
-            shape.rotate();
-            shape.render();
+                shape.hide();
+                shape.rotate();
+                shape.render();
 
+            }
         }
     }
 
