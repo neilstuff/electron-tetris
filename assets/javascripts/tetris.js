@@ -627,6 +627,7 @@ class Board {
 
     }
 
+
     removeBlocks(blocks) {
  
         for (let block of blocks) {

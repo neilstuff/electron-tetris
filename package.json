@@ -1,7 +1,7 @@
 {
-    "name": "mine-sweeper",
+    "name": "electron-tetris",
     "version": "1.0.0",
-    "description": "Mine-Sweeper",
+    "description": "Electron Tetris",
     "main": "main.js",
     "scripts": {
         "pack": "electron-builder --dir",
@@ -23,11 +23,11 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/thesourorange/neilstuff/mine-sweeper.git"
+        "url": "git+https://github.com/thesourorange/neilstuff/electron-tetris.git"
     },
     "keywords": [
         "Electron",
-        "utility"
+        "Game"
     ],
     "author": "GitHub",
     "license": "CC0-1.0",
@@ -42,7 +42,7 @@
         "node": "^17.7.2"
     },
     "bugs": {
-        "url": "https://github.com/thesourorange/neilstuff/mine-sweeper"
+        "url": "https://github.com/thesourorange/neilstuff/electron-tetris"
     },
     "homepage": "https://github.com/thesourorange/neilstuff/mine-sweeper#readme"
 }
