@@ -864,6 +864,10 @@ window.onload = function () {
         board.rightKeyPress();
     });
 
+    document.getElementById('music').addEventListener('ended', function(){
+        window.audio.play();
+     }, false);
+     
     window.audio = new Audio(document.getElementById("music").src);
     window.audio.volume = 0.1;
     window.audio.loop = true;
