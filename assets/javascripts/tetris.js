@@ -486,6 +486,7 @@ class Board {
         this.setScore(0);
         document.getElementById("banner").style.display = "none";
         window.audio.play();
+        window.audio.loop = true;
 
     }
 
@@ -572,33 +573,39 @@ class Board {
                 ref.flashBlocks(blocks, function () {
                     window.rowRemoved.play();
 
-                    ref.removeBlocks(blocks);
                     ref.destroyBlocks(blocks);
                     ref.fallBlocks(row);
                     ref.setScore(ref.getScore() + 10);
 
                     accept();
+
                 });
 
             })
 
         }
 
-        for (let row = 0; row < 16; row++) {
+        next: for (let row = 0; row < 16; row++) {
             let blocks = [];
 
             for (let column = 0; column < 10; column++) {
                 let block = this.getBlock(row, column);
+                
                 if (!block) {
-                    break;
+                    continue next;
                 }
+                
                 blocks.push(block);
+                
             }
 
             if (blocks.length == 10) {
                 let ref = this;
-
+                this.removeBlocks(blocks);
+   
                 await flashRow(ref, row, blocks);
+
+                continue next;
 
             }
         }
@@ -619,6 +626,7 @@ class Board {
     fallBlocks(pos) {
 
         for (let row = 0; row < pos; row++) {
+
             for (let column = 0; column < 10; column++) {
 
                 let block = this.getBlock(row, column);
