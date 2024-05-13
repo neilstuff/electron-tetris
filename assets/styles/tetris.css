@@ -85,11 +85,12 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 200px;
-    height: 100px;
-    background-color: #303a21;
+    height: 55px;
+    background-color: rgba(0,0,0,0.6);
     color: #c4d6a7;
     z-index: 2;
     text-align: center;
+    border-radius: 5px;
   }
   
   #message {
