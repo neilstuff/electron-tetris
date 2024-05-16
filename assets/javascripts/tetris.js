@@ -625,6 +625,7 @@ class Board {
 
     fallBlocks(pos) {
 
+        
         for (let row = 0; row < pos; row++) {
 
             for (let column = 0; column < 10; column++) {
@@ -638,6 +639,12 @@ class Board {
                 }
 
             }
+
+        }
+
+        for (let shape of this.getShapes()) {
+      
+                shape.render();
 
         }
 
