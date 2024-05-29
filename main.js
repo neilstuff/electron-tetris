@@ -24,7 +24,7 @@ function createWindow() {
         height: 520,
         resizable: false,
         frame: true,
-        maximizable: true,
+        maximizable: false,
         minHeight: 520,
         minWidth: (config.mode == "debug") ? 1000 : 400,
         fullscreenable: true,
